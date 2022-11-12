@@ -4,12 +4,14 @@ class CanvasPainter {
 	// the 'view' of the mvc
 	ctx;
 	strokeFn;
+	targetFr;
 	state = true;
-	constructor(elId, strokeFn){
+	constructor(elId, strokeFn, targetFr=30){
 		this.ctx = document.getElementById(elId).getContext("2d");
 		this.strokeFn = strokeFn;
+		this.targetFr=1000/targetFr;
 	}
-	stroke = function(x, y, radius, color){
+	stroke = async function(x, y, radius, color){
 		// create path
 		this.ctx.beginPath();
 		this.ctx.arc(x, y, radius, 0, Math.PI *2, false);
@@ -36,7 +38,7 @@ class CanvasPainter {
 			for (let s in strokeData){
 				let _s = strokeData[s];
 				this.stroke(_s[0], _s[1], _s[2], _s[3], this.ctx);
-				setInterval(1000);
+				setInterval(this.targetFr);
 			}
 			await window.requestAnimationFrame(this.draw.bind(this));
 		}
