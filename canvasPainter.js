@@ -8,7 +8,10 @@ class CanvasPainter {
 	state = true;
 	constructor(elId, strokeFn, targetFr=30){
 		this.ctx = document.getElementById(elId).getContext("2d");
-		this.strokeFn = strokeFn;
+		/** Stroke Function**/
+		this.strokeFn = strokeFn; 
+		// function to get rendering data from a separate program 
+		// designed to work with canvas painter
 		this.targetFr=1000/targetFr;
 	}
 	stroke = async function(x, y, radius, color){
@@ -27,8 +30,8 @@ class CanvasPainter {
 		this.ctx.closePath();
 	}
 	getStrokeData = function(){
-		// connect to output of model program
-		// output function should return an array of array [x, y, radius, color]
+		// connect to output of model
+		// output function should return an vector of [x, y, radius, color]
 		console.log("gathering stroke data");
 		return this.strokeFn();
 	}
@@ -61,7 +64,7 @@ class CanvasPainter {
 
 let randomStrokeData = _ => {
 	let strokes = []
-	// pass into getStrokeData
+	// pass into strokeFn when instancing CanvasPainter
 	let colors = [
 		"orange",
 		"red",
